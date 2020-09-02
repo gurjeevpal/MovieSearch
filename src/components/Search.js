@@ -35,7 +35,7 @@ const Search = (props) => {
       <div className="row">
         
         <div className="col-md-4">
-          <select onChange={callSearchFunction}>
+          <select className="dropdown" onChange={callSearchFunction}>
             {name && name.map((name,index) => (
              <option key={index}
              value={handleSearchInputChanges} onChange={(e, data) => { callSearchFunction(data.value) }}>{name}</option>
