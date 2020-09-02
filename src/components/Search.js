@@ -19,14 +19,14 @@ const Search = (props) => {
     props.search(searchValue);
     resetInputField();
   }
-  const names = [
-    { label: "Luke Skywalker", value: 1 },
-    { label: "C-3PO", value: 2 },
-    { label: "R2-D2", value: 3 },
-    { label: "Darth Vader", value: 4 },
-    { label: "Leia Organa", value: 5 },
-    { label: "Owen Lars", value: 6 },
-  ];
+//   const names = [
+//     { label: "Luke Skywalker", value: 1 },
+//     { label: "C-3PO", value: 2 },
+//     { label: "R2-D2", value: 3 },
+//     { label: "Darth Vader", value: 4 },
+//     { label: "Leia Organa", value: 5 },
+//     { label: "Owen Lars", value: 6 },
+//   ];
   
   return (
     <div>
@@ -35,7 +35,7 @@ const Search = (props) => {
       <div className="row">
         
         <div className="col-md-4">
-          <select className="dropdown" onChange={callSearchFunction}>
+          <select className="dropdown" >
             {name && name.map((name,index) => (
              <option key={index}
              value={handleSearchInputChanges} onChange={(e, data) => { callSearchFunction(data.value) }}>{name}</option>
