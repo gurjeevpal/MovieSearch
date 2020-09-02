@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import Select from 'react-select';
 
-const Search = (props) => {
-  const [ searchValue, setSearchValue, name] = useState("");
+const Search = ({search,actors}) => {
+  const [ searchValue, setSearchValue] = useState("C-3PO");
 
+  console.log("Props ------------ "+actors);
   const handleSearchInputChanges = (e) => {
     setSearchValue(e.target.value);
   }
@@ -16,18 +17,12 @@ const Search = (props) => {
 
   const callSearchFunction = (e) => {
     e.preventDefault();
-    props.search(searchValue);
+    //alert(e.target.value);
+    //setSearchValue(e.target.value);
+    search(searchValue);
     resetInputField();
   }
-//   const names = [
-//     { label: "Luke Skywalker", value: 1 },
-//     { label: "C-3PO", value: 2 },
-//     { label: "R2-D2", value: 3 },
-//     { label: "Darth Vader", value: 4 },
-//     { label: "Leia Organa", value: 5 },
-//     { label: "Owen Lars", value: 6 },
-//   ];
-  
+
   return (
     <div>
       <form className="search">
@@ -35,18 +30,13 @@ const Search = (props) => {
       <div className="row">
         
         <div className="col-md-4">
-          <select className="dropdown" >
-            {name && name.map((name,index) => (
+          <select className="dropdown"  onChange={callSearchFunction}>
+            {actors && actors.map((actor,index) => (
              <option key={index}
-             value={handleSearchInputChanges} onChange={(e, data) => { callSearchFunction(data.value) }}>{name}</option>
+             value={actor.name} >{actor.name}</option>
             ))}
           </select>
-
-
-        
-                      
-
-               </div>
+     </div>
         <div className="col-md-4"></div>
       </div>
     </div>
