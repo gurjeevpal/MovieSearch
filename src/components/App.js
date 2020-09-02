@@ -46,7 +46,9 @@ const reducer = (state, action) => {
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   
-
+  const [actors, setActors] = useState();
+  const [myfilms, setMyFilms] = useState([]);
+  
   useEffect(() => {
     fetch(MOVIE_API_URL)
         .then(response => response.json())
@@ -54,16 +56,8 @@ const App = () => {
             const { results } = jsonResponse;
             results.forEach(key => {
               const { name, films } = key;              
-              films.forEach(key2 => {
-                fetch(key2)
-                .then(resp => resp.json())
-                .then(data => {
-                  const { title } = data;
-                  console.log(title);
-                })
-              })
-              console.log('name', name);
-              if (jsonResponse.Response === "True") {
+              setActors(results);
+           if (jsonResponse.Response === "True") {
                 dispatch({
                     type: "SEARCH_MOVIES_SUCCESS",
                     payload: jsonResponse.Search
@@ -80,6 +74,13 @@ const App = () => {
   }, []);
 
   const search = searchValue => {
+    let actor = actors.filter((value)=>{
+      return value=== searchValue;
+    })
+    let _myfilms = [];
+    
+ 
+    
     dispatch({
       type: "SEARCH_MOVIES_REQUEST"
     });
@@ -87,6 +88,22 @@ const App = () => {
     fetch(`https://swapi.dev/api/people/`)
     .then(response => response.json())
     .then(jsonResponse => {
+      const { results } = jsonResponse;
+      results.forEach(key => {
+        const { name, films } = key;   
+           films.forEach(key2 => {
+            fetch(key2)
+            .then(resp => resp.json())
+            .then(data => {
+              const { title } = data;
+             _myfilms.push(title);           
+              
+            })
+            setMyFilms(_myfilms);
+          });  
+                
+      })
+
       if (jsonResponse.Response === "True") {
         dispatch({
             type: "SEARCH_MOVIES_SUCCESS",
@@ -114,7 +131,9 @@ const App = () => {
       
             
   <Row >
-    <Col md={4}><div><Search search={search} /></div></Col>
+
+   
+    <Col md={4}><div><Search actors={actors} search={search} /></div></Col>
     
   </Row>
 
@@ -126,8 +145,8 @@ const App = () => {
         ) : errorMessage ? (
           <div className="errorMessage">{errorMessage}</div>
         ) : (
-          movies.map((movie, index) => (
-            <Movie key={`${index}-${movie.Title}`} movie={movie} />
+          myfilms.map((myfilms, index) => (
+            <Movie key={`${index}-${myfilms.Title}`} movie={myfilms} />
           
           ))
       )}
