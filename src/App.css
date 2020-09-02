@@ -12,7 +12,16 @@
   box-sizing: border-box;
   padding: 10px 80px;
 }
-
+.dropdown{
+  width: 250px;
+    padding: 5px;
+    background-color: white;
+    color: #18294E;
+    padding: 5px;
+    font-size: 16px;
+    display: inline-block;
+    border-radius: 5px;
+}
 .App-header > h2 {
   margin: 0;
   color: #c3d8fd;
